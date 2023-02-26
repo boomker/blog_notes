@@ -1,7 +1,6 @@
 # Python全栈之路系列之IO多路复用
 
-![io-multiplexing-01](/images/2016/12/1483022063.png)
-=======
+
 ![io-multiplexing-01](../images/2016/12/1483022063.png)
 
 ## What is IO Multiplexing?

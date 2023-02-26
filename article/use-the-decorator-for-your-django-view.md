@@ -206,8 +206,7 @@ $ python3 manage.py createsuperuser
 
 打开`http://127.0.0.1:8000/blog/`页面，试着删除不是其他用户的文章，看看是什么结果。
 
-![1484572921](/images/2017/01/1484572921.gif)
-=======
+
 ![django-users](../images/2017/01/1484572862.png "django-users")
 
 退回上一级页面，添加三篇文章

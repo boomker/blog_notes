@@ -1,6 +1,6 @@
 # 记一些杂技（持续更新）
 
-=======
+
 - 命令行连接shadowsocks客户端
 
 ```bash
@@ -29,7 +29,7 @@ npm config set registry http://registry.npm.taobao.org
 .schema tab_name
 ```
 
-=======
+
 - Ubuntu chromium安装Flash
 
 ```bash
@@ -75,7 +75,7 @@ export LANG_ALL=en_US.utf8
 export LC_ALL=en_US.utf8
 ```
 
-=======
+
 - 修改Linux PS1前缀
 
 ```bash
@@ -148,7 +148,7 @@ discard_all()
 ```bash
 touch ~/.hushlogin
 ```
-=======
+
 - 通过SQLplus连接Oracle
 
 ```bash
