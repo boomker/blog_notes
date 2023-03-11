@@ -1,10 +1,15 @@
-# Welcome to ansheng’s blog!
+# Welcome to boomker’s blog!
 
 ## 专题系列
 
 -   [SQL 语句练习](article/sql-exercises.md)
 -   [Python 全栈之路](article/python-full-stack-way.md)
 -   [记一些杂技（持续更新）](article/remember-some-acrobatics.md)
+
+## 2023
+
+* 2023 年 03 月 11 日 [PDM 包依赖管理工具尝鲜](PDM%20包依赖管理工具尝鲜.md) 
+* 2023 年 03 月 11 日 [spacehammer-MAC自动化与窗口管理](spacehammer-MAC自动化与窗口管理.md)
 
 ## 2019
 

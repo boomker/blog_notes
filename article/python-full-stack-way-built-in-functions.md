@@ -2,24 +2,24 @@
 
 The Python interpreter has a number of functions and types built into it that are always available. They are listed here in alphabetical order.
 
-||||Built-in Functions||||
-|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-|abs()|dict()|help()|min()|setattr()|all()|dir()|
-|hex()|next()|slice()|any()|divmod()|id()|object()|
-|sorted()|ascii()|enumerate()|input()|oct()|staticmethod()|bin()|
-|eval()|int()|open()|str()|bool()|exec()|isinstance()|
-|ord()|sum()|bytearray()|filter()|issubclass()|pow()|super()|
-|bytes()|float()|iter()|print()|tuple()|callable()|format()|
-|len()|property()|type()|chr()|frozenset()|list()|range()|
-|vars()|classmethod()|getattr()|locals()|repr()|zip()|compile()|
-|globals()|map()|reversed()|\__import__()|complex()|hasattr()|max()|
-|round()|delattr()|hash()|memoryview()|set()|
+|           |               |             | Built-in Functions |              |                |              |
+|:---------:|:-------------:|:-----------:|:------------------:|:------------:|:--------------:|:------------:|
+|   abs()   |    dict()     |   help()    |       min()        |  setattr()   |     all()      |    dir()     |
+|   hex()   |    next()     |   slice()   |       any()        |   divmod()   |      id()      |   object()   |
+| sorted()  |    ascii()    | enumerate() |      input()       |    oct()     | staticmethod() |    bin()     |
+|  eval()   |     int()     |   open()    |       str()        |    bool()    |     exec()     | isinstance() |
+|   ord()   |     sum()     | bytearray() |      filter()      | issubclass() |     pow()      |   super()    |
+|  bytes()  |    float()    |   iter()    |      print()       |   tuple()    |   callable()   |   format()   |
+|   len()   |  property()   |   type()    |       chr()        | frozenset()  |     list()     |   range()    |
+|  vars()   | classmethod() |  getattr()  |      locals()      |    repr()    |     zip()      |  compile()   |
+| globals() |     map()     | reversed()  |   __import__()     |  complex()   |   hasattr()    |    max()     |
+|  round()  |   delattr()   |   hash()    |    memoryview()    |    set()     |                |              |
 
-> 官方介绍：https://docs.python.org/3/library/functions.html
+> 官方介绍： https://docs.python.org/3/library/functions.html
 
 ## 内置函数详解
 
-abs(x)
+### abs(x)
 
 > 返回数字的绝对值，参数可以是整数或浮点数，如果参数是复数，则返回其大小。
 
@@ -31,7 +31,7 @@ abs(x)
 25
 ```
 
-all(iterable)
+### all(iterable)
 
 > all()会循环括号内的每一个元素，如果括号内的所有元素都是真的，或者如果iterable为空，则返回`True`，如果有一个为假的那么就返回`False`
 
@@ -49,7 +49,7 @@ False
 
 假的参数有：`False`、`0`、`None`、`""`、`[]`、`()`、`{}`等，查看一个元素是否为假可以使用bool进行查看。
 
-any(iterable)
+### any(iterable)
 
 > 循环元素，如果有一个元素为真，那么就返回True，否则就返回False
 
@@ -60,7 +60,7 @@ True
 False
 ```
 
-ascii(object)
+### ascii(object)
 
 > 在对象的类中寻找`__repr__`方法，获取返回值
 
@@ -76,7 +76,7 @@ ascii(object)
 <__main__.Foo object at 0x000001FDEE13D320>
 ```
 
-bin(x)
+### bin(x)
 
 将整数x转换为二进制字符串，如果x不为Python中int类型，x必须包含方法`__index__()`并且返回值为`integer`
 
@@ -97,7 +97,7 @@ bin(x)
 '0b100011'
 ```
 
-bool([x])
+### bool([x])
 
 查看一个元素的布尔值，非真即假
 
@@ -112,7 +112,8 @@ True
 True
 ```
 
-bytearray([source [, encoding [, errors]]])
+
+### bytearray([source [, encoding [, errors]]])
 
 > 返回一个byte数组，Bytearray类型是一个可变的序列，并且序列中的元素的取值范围为 [0 ,255]。
 
@@ -125,6 +126,7 @@ source参数：
 
 ```python
  >>> bytearray(3)
+ >>> 
 bytearray(b'\x00\x00\x00')
 ```
 
