@@ -75,7 +75,7 @@ $ docker start 4253385a9655
 
 ```bash
 $ docker run --name mydocker -t -i centos /bin/bash
-[root@5324897fb034 /]# ps -aux|grep -v "ps -aux" # 可以看到只启动了一个/bin/bash进程
+[root@5324897fb034 /]\# ps -aux|grep -v "ps -aux" # 可以看到只启动了一个/bin/bash进程
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root         1  0.0  0.0  11776  3084 ?        Ss   05:49   0:00 /bin/bash
 ```
@@ -204,7 +204,7 @@ $ docker inspect 80cef0fbd4f1
 
 ```bash
 $ sudo docker run -i -t -v /opt:/opt centos   
-# df -h | grep "/opt"
+\# df -h | grep "/opt"
 /dev/sda2       457G   62G  373G  15% /opt
 ```
 

@@ -4,7 +4,7 @@
 
 -   [SQL 语句练习](article/sql-exercises.md)
 -   [Python 全栈之路](article/python-full-stack-way.md)
--   [记一些杂技（持续更新）](article/remember-some-acrobatics.md)
+-   [奇技淫巧(持续更新)](article/remember-some-acrobatics.md)
 
 ## 2023
 
