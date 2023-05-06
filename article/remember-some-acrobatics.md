@@ -32,6 +32,12 @@ git log main --oneline -18 |grep -v "lockfile" |COL1 |tac |xargs git cherry-pick
 	`alias -g COL1="awk '{ print \$1 }'"`
 # `-x`: append commit name
 # `-m 1`: 遇到Meger 分支，选择 MainLine 分支的 commit 来应用
+# -----
+glp main  --since=16.days --grep="lockfile" --invert-grep |C1 |tac |X git cherry-pick -m 1 -x
+# glp :
+	`alias glp="git log --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)%an%Creset %C(yellow)%d%Creset' " `
+# C1:
+	`alias -g C1="|choose 0"`
 ```
 
 ### 三. 网络相关命令行杂技
@@ -45,5 +51,54 @@ curl -L ip.tool.lu
 lsof -nP -i # 列出TCP和UDP连接，并抑制服务名称和端口名称解析
 lsof -nP -iTCP -sTCP:"established" # 指定连接状态
 # 还可以进一步列出指定应用程序名称的或者PID
+lsof -a -d cwd -p processid
 lsof -nP -iTCP -sTCP:"established" -a -c "WeChat" # '-a'，and; '-t'，可以打印进程号
+```
+
+###  四. 文件字符串处理 
+#### 0. 同文件不同列截取部分拼接一起输出
+```bash
+awk -F'[ \t[]+' '{if(NR<13){print $0}else{x=substr($3,1,1);y=substr($5,1,1);print $1"\t",$2,$4"["y x"\t",$NF}}' flypy_twords_fzm.dict.yaml > flypy_twords_fzmx.dict.yaml
+```
+
+#### 1. 同文件不同列合并输出
+```bash
+parallel  --no-run-if-empty  --xapply echo {1}: {2} ::: $(awk -F'[:,]+' '{print $4}' char_common_base.json) ::: "$(awk -F'[][]+' '{print $2}' char_common_base.json)" |tee > hzpy.txt
+# xapply: 对输入源进行一一对应排列， 输入源整体加上双引号视为整体
+```
+
+#### 2. 同字段值的列去重
+```bash
+echo '"嚷":  "rǎng", "rāng" \n "嚼":  "jiáo", "jué", "jiào" \n "颤":  "chàn", "zhàn"' |sed 'y/íǐáàǎāé/iiaaaae/' |awk -F'[:,]+' -vORS=" "   '{for(i=1;i<=NF;i++)s[gensub(" ", "", "g",$i),NR]++}{for(j in s){split(j,b,SUBSEP);if(b[2]==NR)print b[1]}printf "\n"}'
+# 数组 key 必须携带行号NR， 不然多个字段会被视为多行； 指定输出记录分隔符为空格，避免每个字段都以每行输出
+```
+
+#### 3. 同字段值的行提取出来放一起
+```bash
+awk '{s[$1]++}END{for(i in s){if(s[i]==2){print i |"xargs -I% rg % fcfsu.txt"}}}' fcfsu 
+```
+
+#### 4. 不同行数据，它们同一列中字段值有相同字串，提取这些行放一起
+```bash
+awk '{s[$1,substr($2,3,4)]++}END{for(i in s){if(s[i]==2){split(i,b,SUBSEP) ;print b[1] |"xargs -I% rg % dyzx"}}}' dyzy 
+```
+
+#### 5. a 文件字段不存在于 b 文件中，打印出来
+```bash
+awk 'NR==FNR{s[$0]++}{if(NR!=FNR && $0 !~ /^$/){a[$1]++}}END{for(i in s)if(a[i]<1)print i,s[i]}' a b
+```
+
+#### 6. 已知某列字符串，批量替换另外一列
+```bash
+choose -i a 0 |xargs -I % gsed -i -r 's/^%(\t.*)\t([0-9 ]+)$/%\1\t1/g' cn_dicts/flypy_twords.dict.yaml
+```
+
+#### 7. 相邻接的奇偶行，同列比大小，取小打印
+```bash
+awk '{s[NR]=$0}END{for(i in s){if(i%2==0){split(s[i],a); split(s[i-1],b);if(a[2]<b[2]) print s[i];else print s[i-1] }}}' sf
+```
+
+#### 8.  找出某几列相同的行
+```bash
+awk '{s[$1$2$3]++}END{for(i in s)if(s[i]>1)print substr(i,1,2)}' a |xargs -I % rg % a.bak > dupa
 ```
