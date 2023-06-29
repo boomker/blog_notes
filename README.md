@@ -7,7 +7,7 @@
 -   [奇技淫巧(持续更新)](article/remember-some-acrobatics.md)
 
 ## 2023
-
+* 2023 年 06 月 10 日 [Git 使用之疑难杂症](article/Git%20使用之疑难杂症.md) 
 * 2023 年 03 月 11 日 [PDM 包依赖管理工具尝鲜](PDM%20包依赖管理工具尝鲜.md) 
 * 2023 年 03 月 11 日 [spacehammer-MAC自动化与窗口管理](spacehammer-MAC自动化与窗口管理.md)
 

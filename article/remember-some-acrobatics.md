@@ -55,6 +55,11 @@ lsof -a -d cwd -p processid
 lsof -nP -iTCP -sTCP:"established" -a -c "WeChat" # '-a'，and; '-t'，可以打印进程号
 ```
 
+#### 3. Linux 系统设定 IP 地址
+```bash
+nmcli con add type ethernet con-name ens33 ifname ens33 ip4 192.168.0.21/24 gw4 192.168.0.1
+```
+
 ###  四. 文件字符串处理 
 #### 0. 同文件不同列截取部分拼接一起输出
 ```bash
@@ -70,12 +75,14 @@ parallel  --no-run-if-empty  --xapply echo {1}: {2} ::: $(awk -F'[:,]+' '{print 
 #### 2. 同字段值的列去重
 ```bash
 echo '"嚷":  "rǎng", "rāng" \n "嚼":  "jiáo", "jué", "jiào" \n "颤":  "chàn", "zhàn"' |sed 'y/íǐáàǎāé/iiaaaae/' |awk -F'[:,]+' -vORS=" "   '{for(i=1;i<=NF;i++)s[gensub(" ", "", "g",$i),NR]++}{for(j in s){split(j,b,SUBSEP);if(b[2]==NR)print b[1]}printf "\n"}'
-# 数组 key 必须携带行号NR， 不然多个字段会被视为多行； 指定输出记录分隔符为空格，避免每个字段都以每行输出
+# 数组 key 必须携带行号NR， 不然多个字段会被视为多行； 
+# 指定输出记录分隔符为空格，避免每个字段都以每行输出
 ```
 
 #### 3. 同字段值的行提取出来放一起
 ```bash
 awk '{s[$1]++}END{for(i in s){if(s[i]==2){print i |"xargs -I% rg % fcfsu.txt"}}}' fcfsu 
+awk -F'\t' '{s[$1]++;w[$0]}END{for(i in w){split(i, a, "\t");if(s[a[1]]>1)print i}}' flypy_wordsu
 ```
 
 #### 4. 不同行数据，它们同一列中字段值有相同字串，提取这些行放一起
@@ -83,9 +90,9 @@ awk '{s[$1]++}END{for(i in s){if(s[i]==2){print i |"xargs -I% rg % fcfsu.txt"}}}
 awk '{s[$1,substr($2,3,4)]++}END{for(i in s){if(s[i]==2){split(i,b,SUBSEP) ;print b[1] |"xargs -I% rg % dyzx"}}}' dyzy 
 ```
 
-#### 5. a 文件字段不存在于 b 文件中，打印出来
+#### 5. a 文件字段值不存在于 b 文件中，打印出来
 ```bash
-awk 'NR==FNR{s[$0]++}{if(NR!=FNR && $0 !~ /^$/){a[$1]++}}END{for(i in s)if(a[i]<1)print i,s[i]}' a b
+awk 'NR==FNR{s[$1]++}{if(NR!=FNR && $0 !~ /^$/){a[$1]++}}END{for(i in s)if(a[i]<1)print i,s[i]}' a b
 ```
 
 #### 6. 已知某列字符串，批量替换另外一列
@@ -96,9 +103,28 @@ choose -i a 0 |xargs -I % gsed -i -r 's/^%(\t.*)\t([0-9 ]+)$/%\1\t1/g' cn_dicts/
 #### 7. 相邻接的奇偶行，同列比大小，取小打印
 ```bash
 awk '{s[NR]=$0}END{for(i in s){if(i%2==0){split(s[i],a); split(s[i-1],b);if(a[2]<b[2]) print s[i];else print s[i-1] }}}' sf
+# 数组 idx 从 1 开始计数
 ```
 
-#### 8.  找出某几列相同的行
+#### 8. 找出某几列相同的行
 ```bash
 awk '{s[$1$2$3]++}END{for(i in s)if(s[i]>1)print substr(i,1,2)}' a |xargs -I % rg % a.bak > dupa
 ```
+
+#### 9. 字段长度不合规定的行搂出来
+```bash
+awk -F'\t' '{if(length(gensub(" ","","g", $2))%2!=0)print $0}' cn_dicts/flypy_super_ext.dict.yaml 
+```
+
+#### 10. 精准替换指定位置的字符串
+```bash
+awk -F'\t'  '{x=index($1, "系");split($2, a, " ");{if(a[x]=="ji"){a[x]="xi";zm=""}};{for(j in a){zm=zm?zm" "a[j]:a[j]}}{print $1"\t"zm"\t"$NF}}' jkl >jjj
+parallel  --no-run-if-empty --xapply sd {1} {2} jkl ::: "$(awk -F'\t' '{print $0}' jkl)" ::: "$(awk -F'\t' '{print $0}' jjj)"
+```
+
+### 五.  Bash  技巧
+#### 1.  双循环
+```bash
+for ((i = 0, p = $(pgrep named); i < 12; i ++, p++)); do taskset -pc $i $p;done
+```
+
