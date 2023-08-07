@@ -118,6 +118,7 @@ awk -F'\t' '{if(length(gensub(" ","","g", $2))%2!=0)print $0}' cn_dicts/flypy_su
 
 #### 10. 精准替换指定位置的字符串
 ```bash
+awk -F'\t'  '{split($1, arr, 'x');split($2, s, " ");{for(i in arr){if(arr[i]=="价" && s[i]=="jp")print $0}}}' wer
 awk -F'\t'  '{x=index($1, "系");split($2, a, " ");{if(a[x]=="ji"){a[x]="xi";zm=""}};{for(j in a){zm=zm?zm" "a[j]:a[j]}}{print $1"\t"zm"\t"$NF}}' jkl >jjj
 parallel  --no-run-if-empty --xapply sd {1} {2} jkl ::: "$(awk -F'\t' '{print $0}' jkl)" ::: "$(awk -F'\t' '{print $0}' jjj)"
 ```
